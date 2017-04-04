@@ -1,0 +1,15 @@
+﻿<!-- -------------------------------------------------------------------------------------------- --
+    AsideSidebarMenuMainItens_01
+---- ------------------------------------------------------------------------------------------- -->
+@using GrmWebAppAdmSiSv01.Extensions.Identity
+
+<li id="left-sidebar-menu-dashboard" class="treeview">
+    <a href="#">
+        <i class="fa fa-desktop"></i> <span>Principal</span> <i class="fa fa-angle-left pull-right"></i>
+    </a>
+    <ul class="treeview-menu">
+        <li id="left-sidebar-menu-principal-home"><a href="@Url.Action("index", "Home")"><i class="fa fa-home"></i> Home</a></li>
+        <li id="left-sidebar-menu-dashboard-dashboardV1"><a href="@Url.Action("DashboardV1", "Home")"><i class="fa fa-dashboard"></i> Painel de controle 01</a></li>
+        <li id="left-sidebar-menu-dashboard-dashboardV2"><a href="@Url.Action("DashboardV2", "Home")"><i class="fa fa-dashcube"></i> Painel de controle 02</a></li>
+    </ul>
+</li>

@@ -1,0 +1,48 @@
+﻿@model GrmWebAppAdmSiSv01.Models.Sindicato.Pais
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Pais</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.CodIbge)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CodIbge)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SiglaPais)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SiglaPais)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NomePais)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NomePais)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

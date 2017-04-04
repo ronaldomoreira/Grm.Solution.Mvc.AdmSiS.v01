@@ -1,0 +1,17 @@
+﻿<!-- -------------------------------------------------------------------------------------------- --
+    AsideSidebarMenuMainItens_05
+---- ------------------------------------------------------------------------------------------- -->
+@using GrmWebAppAdmSiSv01.Extensions.Identity
+
+<li id="left-sidebar-menu-forms" class="treeview">
+    <a href="#">
+        <i class="fa fa-edit"></i> <span>Forms</span>
+        <i class="fa fa-angle-left pull-right"></i>
+    </a>
+    <ul class="treeview-menu">
+        <li id="left-sidebar-menu-forms-general"><a href="@Url.Action("General", "Forms")"><i class="fa fa-circle-o"></i> General Elements</a></li>
+        <li id="left-sidebar-menu-forms-advanced"><a href="@Url.Action("Advanced", "Forms")"><i class="fa fa-circle-o"></i> Advanced Elements</a></li>
+        <li id="left-sidebar-menu-forms-editors"><a href="@Url.Action("Editors", "Forms")"><i class="fa fa-circle-o"></i> Editors</a></li>
+    </ul>
+</li>
+

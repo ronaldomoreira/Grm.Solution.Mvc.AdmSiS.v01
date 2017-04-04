@@ -1,0 +1,42 @@
+﻿@model GrmWebAppAdmSiSv01.Models.Sindicato.Municipio
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Municipio</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.MunicipioUf.CodigoIbge)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MunicipioUf.CodigoIbge)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CodIbge)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CodIbge)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NomeMunicipio)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NomeMunicipio)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.IdMunicipio }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

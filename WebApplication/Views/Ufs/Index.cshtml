@@ -1,0 +1,222 @@
+﻿@model IEnumerable<GrmWebAppAdmSiSv01.Models.Sindicato.Uf>
+
+@{
+    ViewBag.Title = "Cadastros";
+    ViewBag.SubTitle = "Etados";
+}
+
+@section Menu {
+    @Scripts.Render("~/Scripts/Elements/General/menu")
+}
+
+<!-- section styles ------------------------------------------------------------------------------------------ -->
+@Styles.Render("~/Styles/Elements/General")
+@Styles.Render("~/Content/JQWidgets/css")
+
+<div id="UfsGrid"></div>
+
+<hr />
+
+<div id="UfsGridMasterDetail"></div>
+
+
+<!-- section Scripts ------------------------------------------------------------------------------------------ -->
+@section Scripts {
+    @Scripts.Render("~/AdminLTE/plugins/jquery-ui/js")
+    @Scripts.Render("~/bundles/JQWidgets/js")
+
+    <script>
+
+        $(document).ready(documentRead);
+
+        /*------------------------------------------------------------------------------------------------
+        // documentRead
+        ------------------------------------------------------------------------------------------------*/
+        function documentRead() {
+
+            //abrir dialogo
+            $("#idBtnTeste1").click(function () {
+                alert("olá");
+            });
+
+            MontarGrid();
+            MontarGridMasterDetail();
+        }
+
+        /*------------------------------------------------------------------------------------------------
+        // MontarGrid
+        ------------------------------------------------------------------------------------------------*/
+        function MontarGrid() {
+
+            debugger;
+
+            // prepare the data
+            var source =
+            {
+                dataFields: [
+                    { name: 'IdUf',    type: 'number' },
+                    { name: 'IdPais',  type: 'number' },
+                    { name: 'CodIbge', type: 'string' },
+                    { name: 'Sigla',   type: 'string' },
+                    { name: 'NomeUf',  type: 'string' }
+                ],
+                id: 'IdUf',
+                dataType: "json",
+                url: '/Ufs/GetUfsJson'
+            };
+
+            var dataAdapter = new $.jqx.dataAdapter(source);
+
+            // create jqxDataTable
+            $("#UfsGrid").jqxDataTable(
+            {
+                width: 1080,
+                source: dataAdapter,
+                theme: 'arctic',
+                pageSize: 16,
+                sortable: true,
+                filterable: true,
+                pageable: true,
+                columns: [
+                    { text: 'Códgo',           dataField: 'IdUf',          width: 60 },
+                    { text: 'Cod. IBGE',       dataField: 'CodIbge',       width: 100 },
+                    { text: 'Sgla',            dataField: 'Sigla',         width: 50 },
+                    { text: 'Nome',            dataField: 'NomeUf',        width: 400 }
+                ]
+            });
+
+        }
+
+        /*------------------------------------------------------------------------------------------------
+        // MontarGridMasterDetail
+        ------------------------------------------------------------------------------------------------*/
+        function MontarGridMasterDetail() {
+
+            debugger;
+
+            //-- preparara o s dados Master --------------------------------------------------------------
+            var ufsSource =
+            {
+                dataFields: [
+                    { name: 'IdUf',            type: 'number' },
+                    { name: 'IdPais',          type: 'number' },
+                    { name: 'CodIbge',         type: 'string' },
+                    { name: 'Sigla',           type: 'string' },
+                    { name: 'NomeUf',          type: 'string' }
+                ],
+                id: 'IdUf',
+                dataType: "json",
+                url: '/Ufs/GetUfsJson'
+            };
+
+            var ufsDataAdapter = new $.jqx.dataAdapter(ufsSource);
+
+            //-- preparar dados detail   ------------------------------------------------------------------
+            var municipiosSource =
+            {
+                dataFields: [
+                    { name: 'IdMunicipio',     type: 'number' },
+                    { name: 'IdUf',            type: 'number' },
+                    { name: 'CodIbge',         type: 'string' },
+                    { name: 'NomeMunicipio',   type: 'string' },
+                    { name: 'NomeUf',          type: 'string' },
+                    { name: 'Sigla',           type: 'string' },
+                    { name: 'SiglaPais',       type: 'string' },
+                    { name: 'NomePais',        type: 'string' }
+
+                ],
+                id: 'IdMunicipio',
+                dataType: "json",
+                url: '/Municipios/GetMunicipiosJson',
+                async: false
+            };
+
+            var municipiosDataAdapter = new $.jqx.dataAdapter(municipiosSource, { autoBind: true });
+            municipiosRecords = municipiosDataAdapter.records;
+            var nestedTables = new Array();
+
+            //-- create nested DataTable  ------------------------------------------------------------------
+            var initRowDetails = function (id, row, element, rowinfo) {
+                element.append($("<div style='margin: 10px;'></div>"));
+                var nestedDataTable = $(element.children()[0]);
+                var filterGroup = new $.jqx.filter();
+                var filter_or_operator = 1;
+                var filterValue = id;
+                var filterCondition = 'equal';
+                var filter = filterGroup.createfilter('stringfilter', filterValue, filterCondition);
+
+                // fill the orders depending on the id.
+                var municipiosbyid = [];
+                for (var m = 0; m < municipiosRecords.length; m++) {
+                    var result = filter.evaluate(municipiosRecords[m]["IdUf"]);
+                    if (result)
+                        municipiosbyid.push(municipiosRecords[m]);
+                }
+
+                var municipiosSource =
+                {
+                    dataFields: [
+                        { name: 'IdMunicipio',     type: 'number' },
+                        { name: 'IdUf',            type: 'number' },
+                        { name: 'CodIbge',         type: 'string' },
+                        { name: 'NomeMunicipio',   type: 'string' },
+                        { name: 'NomeUf',          type: 'string' },
+                        { name: 'Sigla',           type: 'string' },
+                        { name: 'SiglaPais',       type: 'string' },
+                        { name: 'NomePais',        type: 'string' }
+                    ],
+                    id: 'IdMuncipio',
+                    localdata: ufsbyid
+                };
+
+                if (nestedDataTable != null) {
+                    var nestedDataTableAdapter = new $.jqx.dataAdapter(municipiosSource);
+                    nestedDataTable.jqxDataTable({
+                        source: nestedDataTableAdapter,
+                        theme: 'arctic',
+                        width: 900,
+                        height: 256,
+                        pageable: true,
+                        columns: [
+                            { text: 'Código',      dataField: 'IdMunicipio',     width: 60  },
+                            { text: 'Cód. IBGE',   dataField: 'CodIbge',         width: 100 },
+                            { text: 'Nome',        dataField: 'NomeMunicipio',   width: 300 },
+                            { text: 'UF',          dataField: 'SiglaUf',         width: 50  }
+                        ]
+                    });
+                    // store the nested Data Tables and use the Employee ID as a key.
+                    nestedTables[id] = nestedDataTable;
+                }
+            }
+
+            // create jqxDataTable Master -------------------------------------------------------------
+            $("#UfsGridMasterDetail").jqxDataTable(
+            {
+                source: ufsSource,
+                theme: 'arctic',
+                width: 1080,
+                pageSize: 16,
+                sortable: true,
+                filterable: true,
+                pageable: true,
+                rowDetails: true,
+                initRowDetails: initRowDetails,
+                ready: function () {
+                    $("#UfsGridMasterDetail").jqxDataTable('showDetails', 1);
+                },
+                columns: [
+                    { text: 'Códgo',          dataField: 'IdUf',        width: 60  },
+                    { text: 'Cod. IBGE',      dataField: 'CodIbge',     width: 100 },
+                    { text: 'Sgla',           dataField: 'Sigla',       width: 50  },
+                    { text: 'Nome UF',        dataField: 'NomeUf',      width: 400 }
+                ]
+            });
+
+        }
+
+    </script>
+
+    @Scripts.Render("~/AdminLTE/plugins/bootstrap-wysihtml5/js")
+    @Scripts.Render("~/AdminLTE/plugins/datepicker/js")
+
+}

@@ -1,0 +1,43 @@
+﻿@model IEnumerable<GrmWebAppAdmSiSv01.Models.Sindicato.Municipio>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CodIbge)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NomeMunicipio)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CodIbge)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NomeMunicipio)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.IdMunicipio }) |
+            @Html.ActionLink("Details", "Details", new { id=item.IdMunicipio }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.IdMunicipio })
+        </td>
+    </tr>
+}
+
+</table>

@@ -1,0 +1,213 @@
+﻿@model IEnumerable<GrmWebAppAdmSiSv01.Models.Sindicato.Pais>
+
+@{
+    ViewBag.Title = "Cadastros";
+    ViewBag.SubTitle = "Paízes";
+
+}
+
+@section Menu {
+    @Scripts.Render("~/Scripts/Elements/General/menu")
+}
+
+<!-- section styles ------------------------------------------------------------------------------------------ -->
+@Styles.Render("~/Styles/Elements/General")
+@Styles.Render("~/Content/JQWidgets/css")
+
+
+<!-- <div id="PaisGrid"></div>  -->
+
+<div id="PaisGrid"></div>
+
+
+<!-- section Scripts ------------------------------------------------------------------------------------------ -->
+@section Scripts {
+    @Scripts.Render("~/AdminLTE/plugins/jquery-ui/js")
+    @Scripts.Render("~/bundles/JQWidgets/js")
+
+    <script>
+
+        $(document).ready(documentRead);
+
+        /*------------------------------------------------------------------------------------------------
+        // documentRead
+        ------------------------------------------------------------------------------------------------*/
+        function documentRead() {
+
+            //abrir dialogo
+            $("#idBtnTeste1").click(function () {
+                alert("olá");
+            });
+
+            MontarGrid();
+            //MontarGridMasterDetail();
+        }
+
+        /*------------------------------------------------------------------------------------------------
+        // MontarGrid
+        ------------------------------------------------------------------------------------------------*/
+        function MontarGrid() {
+
+            debugger;
+
+            // prepare the data
+            var source =
+            {
+                dataFields: [
+                    { name: 'IdPais', type: 'number', },
+                    { name: 'CodIbge', type: 'string' },
+                    { name: 'SiglaPais', type: 'string' },
+                    { name: 'NomePais', type: 'string' }
+                ],
+                id: 'IdPais',
+                dataType: "json",
+                url: '/Pais/GetPaizesJson'
+            };
+
+            var dataAdapter = new $.jqx.dataAdapter(source);
+
+            // create jqxDataTable
+            $("#PaisGrid").jqxDataTable(
+            {
+                source: dataAdapter,
+                theme: 'arctic',
+                width: 1080,
+                pageSize: 16,
+                sortable: true,
+                filterable: true,
+                pageable: true,
+                columns: [
+                  { text: 'Códgo', dataField: 'IdPais', width: 60 },
+                  { text: 'Cod. IBGE', dataField: 'CodIbge', width: 100 },
+                  { text: 'Sgla', dataField: 'SiglaPais', width: 50 },
+                  { text: 'Nome País', dataField: 'NomePais', width: 400 }
+                ]
+            });
+
+        }
+
+        /*------------------------------------------------------------------------------------------------
+        // MontarGridMasterDetail
+        ------------------------------------------------------------------------------------------------*/
+        function MontarGridMasterDetail() {
+
+            debugger;
+
+            //-- preparara o s dados Master --------------------------------------------------------------
+            var paizesSource =
+            {
+                dataFields: [
+                    { name: 'IdPais', type: 'number', },
+                    { name: 'CodIbge', type: 'string' },
+                    { name: 'SiglaPais', type: 'string' },
+                    { name: 'NomePais', type: 'string' }
+                ],
+                id: 'IdPais',
+                dataType: "json",
+                url: '/Pais/GetPaizesJson'
+            };
+
+            var paizesDataAdapter = new $.jqx.dataAdapter(paizesSource);
+
+            //-- preparar dados detail   ------------------------------------------------------------------
+            var ufsSource = 
+            {
+                dataFields: [
+                    { name: 'IdUf', type: 'number' },
+                    { name: 'IdPais', type: 'number' },
+                    { name: 'CodigoIbge', type: 'string' },
+                    { name: 'Sigla', type: 'string' },
+                    { name: 'NomeUf', type: 'string' }
+                ],
+                id: 'IdUf',
+                dataType: "json",
+                url: '/Ufs/GetUfsJson/0',
+                async: false
+            };
+
+            var ufsDataAdapter = new $.jqx.dataAdapter(ufsSource, { autoBind: true });
+            ufRecords = ufsDataAdapter.records;
+            var nestedTables = new Array();
+
+            //-- create nested DataTable  ------------------------------------------------------------------
+            var initRowDetails = function (id, row, element, rowinfo) {
+                element.append($("<div style='margin: 10px;'></div>"));
+                var nestedDataTable = $(element.children()[0]);
+                var filterGroup = new $.jqx.filter();
+                var filter_or_operator = 1;
+                var filterValue = id;
+                var filterCondition = 'equal';
+                var filter = filterGroup.createfilter('stringfilter', filterValue, filterCondition);
+
+                // fill the orders depending on the id.
+                var ufsbyid = [];
+                for (var m = 0; m < ufRecords.length; m++) {
+                    var result = filter.evaluate(ufRecords[m]["IdPais"]);
+                    if (result)
+                        ufsbyid.push(ufRecords[m]);
+                }
+
+                var ufsSource =
+                {
+                    dataFields: [
+                        { name: 'IdUf', type: 'number' },
+                        { name: 'IdPais', type: 'number' },
+                        { name: 'CodigoIbge', type: 'string' },
+                        { name: 'Sigla', type: 'string' },
+                        { name: 'NomeUf', type: 'string' }
+                    ],
+                    id: 'IdUf',
+                    localdata: ufsbyid
+                };
+
+                if (nestedDataTable != null) {
+                    var nestedDataTableAdapter = new $.jqx.dataAdapter(ufsSource);
+                    nestedDataTable.jqxDataTable({
+                        source: nestedDataTableAdapter,
+                        theme: 'arctic',
+                        width: 800,
+                        height: 256,
+                        pageable: true,
+                        columns: [
+                          { text: 'Código', dataField: 'IdUf', width: 60 },
+                          { text: 'Cód. IBGE', dataField: 'CodigoIbge', width: 100 },
+                          { text: 'Sigla', dataField: 'Sigla', width: 50 },
+                          { text: 'Nome', dataField: 'NomeUf', width: 300 }
+                        ]
+                    });
+                    // store the nested Data Tables and use the Employee ID as a key.
+                    nestedTables[id] = nestedDataTable;
+                }
+            }
+
+            // create jqxDataTable Master -------------------------------------------------------------
+            $("#PaisGridMasterDetail").jqxDataTable(
+            {
+                source: paizesSource,
+                theme: 'arctic',
+                width: 1080,
+                pageSize: 16,
+                sortable: true,
+                filterable: true,
+                pageable: true,
+                rowDetails: true,
+                initRowDetails: initRowDetails,
+                ready: function () {
+                    $("#PaisGridMasterDetail").jqxDataTable('showDetails', 1);
+                },
+                columns: [
+                  { text: 'Códgo', dataField: 'IdPais', width: 60 },
+                  { text: 'Cod. IBGE', dataField: 'CodIbge', width: 100 },
+                  { text: 'Sgla', dataField: 'SiglaPais', width: 50 },
+                  { text: 'Nome País', dataField: 'NomePais', width: 400 }
+                ]
+            });
+
+        }
+
+    </script>
+
+    @Scripts.Render("~/AdminLTE/plugins/bootstrap-wysihtml5/js")
+    @Scripts.Render("~/AdminLTE/plugins/datepicker/js")
+
+}

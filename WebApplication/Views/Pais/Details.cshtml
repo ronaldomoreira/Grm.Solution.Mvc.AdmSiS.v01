@@ -1,0 +1,42 @@
+﻿@model GrmWebAppAdmSiSv01.Models.Sindicato.Pais
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Pais</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.CodIbge)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CodIbge)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SiglaPais)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SiglaPais)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NomePais)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NomePais)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.IdPais }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

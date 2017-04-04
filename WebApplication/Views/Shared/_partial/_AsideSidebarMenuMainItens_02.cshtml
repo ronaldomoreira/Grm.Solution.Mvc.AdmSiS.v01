@@ -1,0 +1,41 @@
+﻿<!-- -------------------------------------------------------------------------------------------- --
+    AsideSidebarMenuMainItens_02
+---- ------------------------------------------------------------------------------------------- -->
+@using GrmWebAppAdmSiSv01.Extensions.Identity
+
+<li id="left-sidebar-menu-cadastros" class="treeview">
+    <a href="#">
+        <i class="fa fa-database"></i> <span>Cadastros</span>
+        <i class="fa fa-angle-left pull-right"></i>
+    </a>
+
+    <ul class="treeview-menu">
+        
+        <li>
+            <a href="#"><i class="fa fa-circle-o"></i> Localidades <i class="fa fa-angle-left pull-right"></i></a>
+            <ul class="treeview-menu">
+                <li><a href="@Url.Action("index", "Pais")"><i class="fa fa-circle-o"></i> Paizes</a></li>
+                <li><a href="@Url.Action("index", "Ufs")"><i class="fa fa-circle-o"></i> Ufs/Municípios</a></li>
+            </ul>
+        </li>
+
+        <li><a href="@Url.Action("index", "Pais")"><i class="fa fa-circle-o"></i> Localidades</a></li>
+        
+        <li>
+            <a href="#"><i class="fa fa-circle-o"></i> Level One <i class="fa fa-angle-left pull-right"></i></a>
+            <ul class="treeview-menu">
+                <li><a href="#"><i class="fa fa-circle-o"></i> Level Two</a></li>
+                <li>
+                    <a href="#"><i class="fa fa-circle-o"></i> Level Two <i class="fa fa-angle-left pull-right"></i></a>
+                    <ul class="treeview-menu">
+                        <li><a href="#"><i class="fa fa-circle-o"></i> Level Three</a></li>
+                        <li><a href="#"><i class="fa fa-circle-o"></i> Level Three</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+
+        <li><a href="#"><i class="fa fa-circle-o"></i> Level One</a></li>
+    </ul>
+
+</li>

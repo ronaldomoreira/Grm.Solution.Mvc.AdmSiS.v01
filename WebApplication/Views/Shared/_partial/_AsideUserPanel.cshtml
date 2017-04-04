@@ -1,0 +1,15 @@
+﻿<!-- -------------------------------------------------------------------------------------------- --
+    AsideUserPanel
+---- ------------------------------------------------------------------------------------------- -->
+@using GrmWebAppAdmSiSv01.Extensions.Identity
+
+<div class="user-panel">
+    <div class="pull-left image">
+        <img src="~/AdminLTE/dist/img/user.svg" class="img-circle" alt="User Image">
+    </div>
+    <div class="pull-left info">
+        <p>@User.Identity.GetUserNameIdentifier()</p>
+        <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+    </div>
+</div>
+

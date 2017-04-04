@@ -1,0 +1,109 @@
+﻿@using GrmWebAppAdmSiSv01.Extensions
+<!DOCTYPE html>
+
+<html lang="pt-br">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <meta name="keywords" content="Sistema, Sindicato, SiS, Grm">
+    <meta name="description" content="Adm-SiS - Grm e Assossiados Sistemas de Gestão Empresarial.">
+    <meta name="author" content="Grm - Sistemas (Ronaldo Moreira)">
+    <meta name="robots" content="index,follow">
+
+    <title>AdmSiS-v01 [Adminstração de Informações Sindicais]</title>
+
+    @Styles.Render("~/AdminLTE/plugins/font-awesome/css")
+    @Styles.Render("~/AdminLTE/plugins/ionicons/css")
+    @Styles.Render("~/AdminLTE/bootstrap/css")
+    @Styles.Render("~/AdminLTE/dist/css")
+    @Styles.Render("~/AdminLTE/dist/css/skins")
+
+</head>
+
+<body class="hold-transition skin-blue sidebar-mini">
+    <div class="wrapper">
+
+        <!-- -------------------------------------------------------------------------------------------- --
+            main-header
+        ---- ------------------------------------------------------------------------------------------- -->
+        <header class="main-header">
+            <a href="@Url.Action("index", "Home")" class="logo">
+                <span class="logo-mini"><img src="~/Content/images/drawable-mdpi/ic_launcher4.png" /> </span>
+                <span class="logo-lg"><img src="~/Content/images/drawable-mdpi/ic_launcher4.png" /><b>Grm </b>Adm-SiS</span>
+            </a>
+            <nav class="navbar navbar-static-top" role="navigation">
+                
+                <!-- -------------------------------------------------------------------------------------------- --
+                  sidebar-toggle - button  
+                ---- ------------------------------------------------------------------------------------------- -->
+                <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+                    <span class="sr-only">Alternar de navegação</span>
+                </a>
+
+                <!-- -------------------------------------------------------------------------------------------- --
+                  navbar-custom-menu  
+                ---- ------------------------------------------------------------------------------------------- -->
+                <div class="navbar-custom-menu">
+		
+                    <!-- -------------------------------------------------------------------------------------------- --
+                        navbar-menu itens: messages, 
+                    ---- ------------------------------------------------------------------------------------------- -->
+                    @Html.Partial("~/Views/Shared/_partial/_NavbarMenuItens.cshtml")
+		
+		    
+                </div>
+
+            </nav>
+        </header>
+
+        <!-- -------------------------------------------------------------------------------------------- --
+            aside main-sidebar
+        ------------------------------------------------------------------------------------------------ -->
+        @Html.Partial("~/Views/Shared/_partial/_AsideMainSidebar.cshtml")
+        
+        <!-- -------------------------------------------------------------------------------------------- --
+            content-wrapper
+        ------------------------------------------------------------------------------------------------ -->
+        <div class="content-wrapper">
+            <section class="content-header">
+                <h1>
+                    @ViewBag.Title
+                    <small>@ViewBag.SubTitle</small>
+                </h1>
+                <ol class="breadcrumb">
+                    <li><a href="#"><i class="fa fa-dashboard"></i>@ViewBag.SubTitle</a></li>
+                </ol>
+            </section>
+            <section class="content">
+                @RenderBody()
+            </section>
+        </div>
+
+        <!-- -------------------------------------------------------------------------------------------- --
+            main-footer
+        ------------------------------------------------------------------------------------------------ -->
+        @Html.Partial("~/Views/Shared/_partial/_FooterMainFooter.cshtml")
+
+        <!-- -------------------------------------------------------------------------------------------- --
+            control-sidebar  (menu da direita)
+        ------------------------------------------------------------------------------------------------ -->
+        @Html.Partial("~/Views/Shared/_partial/_AsideControlSidebar.cshtml")
+
+        <div class="control-sidebar-bg"></div>
+
+    </div>
+
+    @Scripts.Render("~/AdminLTE/plugins/jquery/js")
+    @RenderSection("menu", required: false)
+    @Scripts.Render("~/AdminLTE/bootstrap/js")
+    @Scripts.Render("~/AdminLTE/plugins/slimscroll/js")
+    @Scripts.Render("~/AdminLTE/plugins/fastclick/js")
+    @Scripts.Render("~/Scripts/Shared/_Layout")
+    @Scripts.Render("~/AdminLTE/dist/js")
+    @RenderSection("scripts", required: false)
+
+</body>
+</html>

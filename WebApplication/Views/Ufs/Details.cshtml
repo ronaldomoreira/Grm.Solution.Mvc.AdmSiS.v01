@@ -1,0 +1,50 @@
+﻿@model GrmWebAppAdmSiSv01.Models.Sindicato.Uf
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Uf</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.IdPais)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IdPais)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CodigoIbge)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CodigoIbge)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Sigla)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Sigla)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NomeUf)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NomeUf)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.IdUf }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
